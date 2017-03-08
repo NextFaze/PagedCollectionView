@@ -1,0 +1,6 @@
+framework module PagedCollectionView {
+  umbrella header "PagedCollectionView-umbrella.h"
+
+  export *
+  module * { export * }
+}
