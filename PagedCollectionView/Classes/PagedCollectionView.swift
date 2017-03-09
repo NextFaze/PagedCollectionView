@@ -19,6 +19,14 @@ public class PagedCollectionView: UICollectionView {
         }
     }
     
+    public var currentPage: Int {
+        get {
+            let center = CGPointMake(self.contentOffset.x + self.bounds.size.width/2.0, self.contentOffset.y + self.bounds.size.height/2.0)
+            let indexPath = self.indexPathForItemAtPoint(center)
+            return indexPath?.row ?? 0
+        }
+    }
+    
     private let layout = PagedCollectionViewFlowLayout()
     
     public init(frame: CGRect) {
@@ -33,6 +41,32 @@ public class PagedCollectionView: UICollectionView {
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    var pageWidth: CGFloat {
+        switch self.layout.scrollDirection {
+        case .Horizontal:
+            return self.layout.itemSize.width + self.layout.minimumLineSpacing
+        case .Vertical:
+            return self.layout.itemSize.height + self.layout.minimumLineSpacing
+        }
+    }
+    
+    public func setCurrentPage(page: Int, animated: Bool) {
+        let pageOffset: CGFloat
+        let proposedContentOffset: CGPoint
+        
+        switch self.layout.scrollDirection {
+        case .Horizontal:
+            pageOffset = CGFloat(page) * self.pageWidth - contentInset.left
+            proposedContentOffset = CGPoint(x: pageOffset, y: 0)
+            
+        case .Vertical:
+            pageOffset = CGFloat(page) * pageWidth - contentInset.top
+            proposedContentOffset = CGPoint(x: 0, y: pageOffset)
+            
+        }
+        self.setContentOffset(proposedContentOffset, animated: animated)
     }
     
 }
