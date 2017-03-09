@@ -4,12 +4,12 @@
 
 Pod::Spec.new do |s|
   s.name             = 'PagedCollectionView'
-  s.version          = '0.1.0'
-  s.summary          = 'A centered paged collection view with page controls'
+  s.version          = '0.1'
+  s.summary          = 'A centered paged collection view'
   s.description      = <<-DESC
-This collection view allows cells that are smaller than the
-view itself to be centered, and snaps them to the center to
-achieve paging. There is also an optional page control.
+This collection view renders cells as centered pages, that
+snap to the center when scrolling and allow the next and
+previous cell edges to be seen.
                        DESC
 
   s.homepage         = 'https://github.com/NextFaze/PagedCollectionView'
