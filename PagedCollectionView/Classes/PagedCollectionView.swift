@@ -24,6 +24,7 @@ public class PagedCollectionView: UICollectionView {
     public init(frame: CGRect) {
         self.layout.scrollDirection = .Horizontal
         super.init(frame: frame, collectionViewLayout: self.layout)
+        self.decelerationRate = UIScrollViewDecelerationRateFast
     }
     
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
