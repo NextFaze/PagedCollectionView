@@ -27,7 +27,7 @@ public class PagedCollectionView: UICollectionView {
         }
     }
     
-    private let layout = PagedCollectionViewFlowLayout()
+    public let layout = PagedCollectionViewFlowLayout()
     
     public init(frame: CGRect) {
         self.layout.scrollDirection = .Horizontal
@@ -71,11 +71,19 @@ public class PagedCollectionView: UICollectionView {
     
 }
 
-private class PagedCollectionViewFlowLayout: UICollectionViewFlowLayout {
+public class PagedCollectionViewFlowLayout: UICollectionViewFlowLayout {
+    
+    public var shouldFadeInCells: Bool = false
+    public var fadeInMinAlpha: CGFloat = 0.3
+    
     private var lastCollectionViewSize: CGSize = CGSize.zero
     private var lastScrollDirection: UICollectionViewScrollDirection!
+    
+    public override func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
+        return self.shouldFadeInCells
+    }
 
-    override func invalidateLayoutWithContext(context: UICollectionViewLayoutInvalidationContext) {
+    public override func invalidateLayoutWithContext(context: UICollectionViewLayoutInvalidationContext) {
         super.invalidateLayoutWithContext(context)
         guard let collectionView = self.collectionView else { return }
         // invalidate layout to center first and last
@@ -98,7 +106,7 @@ private class PagedCollectionViewFlowLayout: UICollectionViewFlowLayout {
         }
     }
     
-    override func targetContentOffsetForProposedContentOffset(proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
+    public override func targetContentOffsetForProposedContentOffset(proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
         guard let collectionView = collectionView else { return proposedContentOffset }
         
         let proposedRect: CGRect
@@ -169,6 +177,39 @@ private class PagedCollectionViewFlowLayout: UICollectionViewFlowLayout {
         }
         
         return contentOffset
+    }
+    
+    public override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        var layoutAttributes = super.layoutAttributesForElementsInRect(rect)
+        guard let collectionView = self.collectionView else { return layoutAttributes }
+        if self.shouldFadeInCells == false { return layoutAttributes }
+        
+        let minAlpha: CGFloat = self.fadeInMinAlpha
+        let maxAlpha: CGFloat = 1.0
+        let alphaDelta = maxAlpha - minAlpha
+        
+        if let layoutAttributes = layoutAttributes {
+            for attributes: UICollectionViewLayoutAttributes in layoutAttributes {
+                if attributes.hidden { continue }
+                
+                switch self.scrollDirection {
+                case .Horizontal:
+                    let centeredOffsetX = collectionView.contentOffset.x + self.itemSize.width// + self.minimumLineSpacing
+                    var alpha: CGFloat = maxAlpha
+                    if attributes.center.x < centeredOffsetX {
+                        alpha = maxAlpha - alphaDelta*((centeredOffsetX - attributes.center.x)/self.itemSize.width)
+                    } else if attributes.center.x > centeredOffsetX {
+                        alpha = maxAlpha - alphaDelta*((attributes.center.x - centeredOffsetX)/self.itemSize.width)
+                    }
+                    
+                    attributes.alpha = min(max(alpha, minAlpha), maxAlpha)
+                default:
+                    continue // TODO: vertical scrolling fade support
+                    
+                }
+            }
+        }
+        return layoutAttributes
     }
     
 }

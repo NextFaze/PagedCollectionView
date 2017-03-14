@@ -22,6 +22,7 @@ class ViewController: UIViewController, UICollectionViewDataSource {
         pagedCollectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: ViewController.reuseIdentifier)
         pagedCollectionView.backgroundColor = UIColor.lightGrayColor()
         pagedCollectionView.dataSource = self
+        pagedCollectionView.layout.shouldFadeInCells = true
         self.view.addSubview(pagedCollectionView)
     }
     
@@ -45,7 +46,7 @@ class ViewController: UIViewController, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ViewController.reuseIdentifier, forIndexPath: indexPath)
         cell.layer.cornerRadius = 4.0
         cell.clipsToBounds = true
-        cell.backgroundColor = self.randomColor()
+        cell.backgroundColor = UIColor.redColor()
         
         return cell
     }
