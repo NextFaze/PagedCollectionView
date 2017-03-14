@@ -180,7 +180,7 @@ public class PagedCollectionViewFlowLayout: UICollectionViewFlowLayout {
     }
     
     public override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        var layoutAttributes = super.layoutAttributesForElementsInRect(rect)
+        let layoutAttributes = super.layoutAttributesForElementsInRect(rect)
         guard let collectionView = self.collectionView else { return layoutAttributes }
         if self.shouldFadeInCells == false { return layoutAttributes }
         
