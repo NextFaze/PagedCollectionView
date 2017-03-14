@@ -4,7 +4,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'PagedCollectionView'
-  s.version          = '0.1'
+  s.version          = '0.2'
   s.summary          = 'A centered paged collection view'
   s.description      = <<-DESC
 This collection view renders cells as centered pages, that
