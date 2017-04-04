@@ -1,5 +1,5 @@
 PODS:
-  - PagedCollectionView (0.1.0)
+  - PagedCollectionView (0.2)
 
 DEPENDENCIES:
   - PagedCollectionView (from `../`)
@@ -9,8 +9,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  PagedCollectionView: d0a39c34c954700d83ce01f6f05ea90e51b613b7
+  PagedCollectionView: f760f97b1c61d3ea675e48ca99d07e202d0c0976
 
-PODFILE CHECKSUM: 8a95ffb3e7370bc421dd2a08ea43bc1192b27fb2
+PODFILE CHECKSUM: 44e03e812253dd0cdb11681a85e60cb9dd467ffc
 
 COCOAPODS: 1.1.1

@@ -16,11 +16,11 @@ class ViewController: UIViewController, UICollectionViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let frame = CGRectMake(0.0, 20.0, self.view.frame.size.width, self.view.frame.size.height/2.0)
+        let frame = CGRect(x: 0.0, y: 20.0, width: self.view.frame.size.width, height: self.view.frame.size.height/2.0)
         let pagedCollectionView = PagedCollectionView(frame: frame)
-        pagedCollectionView.itemSize = CGSizeMake(frame.size.width/2.0, frame.size.height - 60.0)
-        pagedCollectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: ViewController.reuseIdentifier)
-        pagedCollectionView.backgroundColor = UIColor.lightGrayColor()
+        pagedCollectionView.itemSize = CGSize(width: frame.size.width/2.0, height: frame.size.height - 60.0)
+        pagedCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: ViewController.reuseIdentifier)
+        pagedCollectionView.backgroundColor = UIColor.lightGray
         pagedCollectionView.dataSource = self
         pagedCollectionView.layout.shouldFadeInCells = true
         self.view.addSubview(pagedCollectionView)
@@ -38,15 +38,15 @@ class ViewController: UIViewController, UICollectionViewDataSource {
     
     // MARK: UICollectionViewDataSource
 
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 32
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ViewController.reuseIdentifier, forIndexPath: indexPath)
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ViewController.reuseIdentifier, for: indexPath)
         cell.layer.cornerRadius = 4.0
         cell.clipsToBounds = true
-        cell.backgroundColor = UIColor.redColor()
+        cell.backgroundColor = UIColor.red
         
         return cell
     }
