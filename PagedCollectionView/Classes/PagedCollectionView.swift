@@ -27,12 +27,12 @@ open class PagedCollectionView: UICollectionView {
         }
     }
     
-    open let layout = PagedCollectionViewFlowLayout()
+    public let layout = PagedCollectionViewFlowLayout()
     
     public init(frame: CGRect) {
         self.layout.scrollDirection = .horizontal
         super.init(frame: frame, collectionViewLayout: self.layout)
-        self.decelerationRate = UIScrollViewDecelerationRateFast
+        self.decelerationRate = UIScrollView.DecelerationRate.fast
     }
     
     override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
@@ -77,7 +77,7 @@ open class PagedCollectionViewFlowLayout: UICollectionViewFlowLayout {
     open var fadeInMinAlpha: CGFloat = 0.3
     
     fileprivate var lastCollectionViewSize: CGSize = CGSize.zero
-    fileprivate var lastScrollDirection: UICollectionViewScrollDirection!
+    fileprivate var lastScrollDirection: UICollectionView.ScrollDirection!
     
     open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         return self.shouldFadeInCells
@@ -139,11 +139,11 @@ open class PagedCollectionViewFlowLayout: UICollectionViewFlowLayout {
             
             switch scrollDirection {
             case .horizontal:
-                if fabs(attributes.center.x - proposedContentOffsetCenter) < fabs(candidateAttributes!.center.x - proposedContentOffsetCenter) {
+                if abs(attributes.center.x - proposedContentOffsetCenter) < abs(candidateAttributes!.center.x - proposedContentOffsetCenter) {
                     candidateAttributes = attributes
                 }
             case .vertical:
-                if fabs(attributes.center.y - proposedContentOffsetCenter) < fabs(candidateAttributes!.center.y - proposedContentOffsetCenter) {
+                if abs(attributes.center.y - proposedContentOffsetCenter) < abs(candidateAttributes!.center.y - proposedContentOffsetCenter) {
                     candidateAttributes = attributes
                 }
             }
