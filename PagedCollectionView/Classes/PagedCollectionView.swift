@@ -49,6 +49,8 @@ open class PagedCollectionView: UICollectionView {
             return self.layout.itemSize.width + self.layout.minimumLineSpacing
         case .vertical:
             return self.layout.itemSize.height + self.layout.minimumLineSpacing
+        @unknown default:
+            return 0.0
         }
     }
     
@@ -60,11 +62,11 @@ open class PagedCollectionView: UICollectionView {
         case .horizontal:
             pageOffset = CGFloat(page) * self.pageWidth - contentInset.left
             proposedContentOffset = CGPoint(x: pageOffset, y: 0)
-            
         case .vertical:
             pageOffset = CGFloat(page) * pageWidth - contentInset.top
             proposedContentOffset = CGPoint(x: 0, y: pageOffset)
-            
+        @unknown default:
+            return
         }
         self.setContentOffset(proposedContentOffset, animated: animated)
     }
@@ -100,6 +102,8 @@ open class PagedCollectionViewFlowLayout: UICollectionViewFlowLayout {
                 inset = (collectionView.bounds.size.height - itemSize.height) / 2
                 collectionView.contentInset = UIEdgeInsets(top: inset, left: 0, bottom: inset, right: 0)
                 collectionView.contentOffset = CGPoint(x: 0, y: -inset)
+            @unknown default:
+                break
             }
             self.lastCollectionViewSize = currentCollectionViewSize
             self.lastScrollDirection = scrollDirection
@@ -116,6 +120,8 @@ open class PagedCollectionViewFlowLayout: UICollectionViewFlowLayout {
             proposedRect = CGRect(x: proposedContentOffset.x, y: 0, width: collectionView.bounds.size.width, height: collectionView.bounds.size.height)
         case .vertical:
             proposedRect = CGRect(x: 0, y: proposedContentOffset.y, width: collectionView.bounds.size.width, height: collectionView.bounds.size.height)
+        @unknown default:
+            return .zero
         }
         
         guard let layoutAttributes = self.layoutAttributesForElements(in: proposedRect) else { return proposedContentOffset }
@@ -128,6 +134,8 @@ open class PagedCollectionViewFlowLayout: UICollectionViewFlowLayout {
             proposedContentOffsetCenter = proposedContentOffset.x + collectionView.bounds.size.width / 2
         case .vertical:
             proposedContentOffsetCenter = proposedContentOffset.y + collectionView.bounds.size.height / 2
+        @unknown default:
+            return .zero
         }
         
         for attributes: UICollectionViewLayoutAttributes in layoutAttributes {
@@ -146,6 +154,8 @@ open class PagedCollectionViewFlowLayout: UICollectionViewFlowLayout {
                 if abs(attributes.center.y - proposedContentOffsetCenter) < abs(candidateAttributes!.center.y - proposedContentOffsetCenter) {
                     candidateAttributes = attributes
                 }
+            @unknown default:
+                break
             }
         }
         
@@ -164,7 +174,6 @@ open class PagedCollectionViewFlowLayout: UICollectionViewFlowLayout {
                 newOffset += velocity.x > 0 ? pageWidth : -pageWidth
             }
             contentOffset = CGPoint(x: newOffset, y: proposedContentOffset.y)
-            
         case .vertical:
             newOffset = candidateAttributesForRect.center.y - collectionView.bounds.size.height / 2
             offset = newOffset - collectionView.contentOffset.y
@@ -174,6 +183,8 @@ open class PagedCollectionViewFlowLayout: UICollectionViewFlowLayout {
                 newOffset += velocity.y > 0 ? pageHeight : -pageHeight
             }
             contentOffset = CGPoint(x: proposedContentOffset.x, y: newOffset)
+        @unknown default:
+            break
         }
         
         return contentOffset
