@@ -4,7 +4,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'PagedCollectionView'
-  s.version          = '0.4'
+  s.version          = '0.5'
   s.summary          = 'A centered paged collection view'
   s.description      = <<-DESC
 This collection view renders cells as centered pages, that
@@ -20,7 +20,7 @@ previous cell edges to be seen.
   s.social_media_url = 'https://twitter.com/nextfaze'
 
   s.ios.deployment_target = '9.0'
-  s.swift_version = '4.2'
+  s.swift_version = '5.0'
 
   s.source_files = 'PagedCollectionView/Classes/**/*'
   
