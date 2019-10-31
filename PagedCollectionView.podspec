@@ -4,7 +4,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'PagedCollectionView'
-  s.version          = '0.5'
+  s.version          = '0.6'
   s.summary          = 'A centered paged collection view'
   s.description      = <<-DESC
 This collection view renders cells as centered pages, that
@@ -22,7 +22,7 @@ previous cell edges to be seen.
   s.ios.deployment_target = '9.0'
   s.swift_version = '5.0'
 
-  s.source_files = 'PagedCollectionView/Classes/**/*'
+  s.source_files = 'Sources/**/Classes/**/*.swift'
   
   # s.resource_bundles = {
   #   'PagedCollectionView' => ['PagedCollectionView/Assets/*.png']
